@@ -21,10 +21,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/{slug}", name="admin")
      */
     public function testAction(Request $request)
     {
-        return new Response('Hello Wordld');
+        return new Response('<html><body>Hello World</body></html>');
     }
 }
