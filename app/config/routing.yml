@@ -7,6 +7,6 @@ app:
     prefix: /
 
 xmas:
-    resource: "@XMasBundle/Controller/XMasController.php"
+    resource: "@XMasBundle/Controller/"
     type:     annotation
     prefix:   /xmas
