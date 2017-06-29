@@ -21,7 +21,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{slug}", name="admin")
+     * @Route("/", name="test")
      */
     public function testAction(Request $request)
     {
