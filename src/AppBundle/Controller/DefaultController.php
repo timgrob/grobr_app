@@ -34,12 +34,10 @@ class DefaultController extends Controller
         $contactForm->handleRequest($request);
 
         if ($contactForm->isSubmitted() && $contactForm->isValid()) {
-
-            $this->container->get('mailer');
-            $message = new \Swift_Message($contact->getSubject());
-            $message
-                ->setFrom('send@example.com')
-                ->setTo($contact->getEmail())
+            $message = \Swift_Message::newInstance()
+                ->setSubject($contact->getSubject())
+                ->setFrom($contact->getEmail())
+                ->setTo($this->container->getParameter('mailer_user'))
                 ->setBody(
                     $this->renderView(
                         'AppBundle::emails/contactEmail.html.twig',
@@ -52,7 +50,7 @@ class DefaultController extends Controller
             $entityManager->persist($contact);
             $entityManager->flush();
 
-            return new Response('test this '. $contact->getEmail());
+            return new Response('<html><body>The email has been sent successfully!</body></html>');
         }
 
         return $this->render('AppBundle::contactForm.html.twig', array(
