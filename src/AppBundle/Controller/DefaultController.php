@@ -49,10 +49,8 @@ class DefaultController extends Controller
                 );
 
             $mailer->send($message);
-            //$entityManager->persist($contact);
-            //$entityManger->flush();
-            // $em->persist($task);
-            // $em->flush();
+            $entityManager->persist($contact);
+            $entityManager->flush();
 
             return new Response('test this '. $contact->getEmail());
         }
