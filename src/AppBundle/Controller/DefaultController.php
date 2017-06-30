@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Form\ContactFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,13 +26,27 @@ class DefaultController extends Controller
     /**
      * @Route("/contact", name="contact")
      */
-    public function contactAction(Request $request)
+    public function contactAction(Request $request, EntityManagerInterface $entityManager)
     {
         $contact = new Contact();
         $contactForm = $this->createForm(ContactFormType::class, $contact);
 
-        return $this->render('contactForm.html.twig', array(
-            'contactForm' => $contactForm->createView(),
+        $contactForm->handleRequest($request);
+
+        if ($contactForm->isSubmitted() && $contactForm->isValid()) {
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            // $em->persist($task);
+            // $em->flush();
+
+            return new Response('test this '. $contact->getEmail());
+        }
+
+        return $this->render('AppBundle::contactForm.html.twig', array(
+            'form' => $contactForm->createView(),
         ));
     }
 

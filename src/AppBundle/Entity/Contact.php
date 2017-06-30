@@ -39,9 +39,22 @@ class Contact
     private $subject;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     private $message;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $timeStamp;
+
+    /**
+     * Contact constructor.
+     */
+    public function __construct()
+    {
+        $this->timeStamp = new \DateTime();
+    }
 
     /**
      * @return mixed

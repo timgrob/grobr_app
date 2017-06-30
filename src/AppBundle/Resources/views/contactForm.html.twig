@@ -2,6 +2,33 @@
 
 {% block body %}
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+        <div>
+            {{ form_widget(form.firstName) }}
+            {{ form_errors(form.firstName) }}
+        </div>
+        <div>
+            {{ form_widget(form.lastName) }}
+            {{ form_errors(form.lastName) }}
+        </div>
+        <div>
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div>
+            {{ form_widget(form.subject) }}
+            {{ form_errors(form.subject) }}
+        </div>
+        <div>
+            {{ form_widget(form.message) }}
+            {{ form_errors(form.message) }}
+        </div>
+
+        {# Render CSRF token etc .#}
+        <div style="display:none">
+            {{ form_rest(form) }}
+        </div>
+
+        <input type="submit" value="Submit">
+
     {{ form_end(form) }}
 {% endblock %}
