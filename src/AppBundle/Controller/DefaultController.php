@@ -26,7 +26,7 @@ class DefaultController extends Controller
     /**
      * @Route("/contact", name="contact")
      */
-    public function contactAction(Request $request, EntityManagerInterface $entityManager)
+    public function contactAction(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
     {
         $contact = new Contact();
         $contactForm = $this->createForm(ContactFormType::class, $contact);
@@ -34,11 +34,23 @@ class DefaultController extends Controller
         $contactForm->handleRequest($request);
 
         if ($contactForm->isSubmitted() && $contactForm->isValid()) {
-            $entityManager->persist($contact);
-            $entityManager->flush();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
+            $this->container->get('mailer');
+            $message = new \Swift_Message($contact->getSubject());
+            $message
+                ->setFrom('send@example.com')
+                ->setTo($contact->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'AppBundle::emails/contactEmail.html.twig',
+                        array('name' => $contact->getFirstName())
+                    ),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+            //$entityManager->persist($contact);
+            //$entityManger->flush();
             // $em->persist($task);
             // $em->flush();
 
