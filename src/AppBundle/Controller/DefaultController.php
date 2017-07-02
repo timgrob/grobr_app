@@ -53,9 +53,26 @@ class DefaultController extends Controller
             return new Response('<html><body>The email has been sent successfully!</body></html>');
         }
 
-        return $this->render('AppBundle::contactForm.html.twig', array(
+        return $this->render('AppBundle::emails/contactForm.html.twig', array(
             'form' => $contactForm->createView(),
         ));
+    }
+
+    /**
+     * @Route("/send")
+     */
+    public function sendAction()
+    {
+        $mailer = $this->get('mailer');
+        $message = \Swift_Message::newInstance()
+            ->setSubject('The Subject for this Message')
+            ->setFrom($this->container->getParameter('mailer_user'))
+            ->setTo('webpage@timgrob.ch')
+            ->setBody('Email from your server')
+        ;
+
+        $mailer->send($message);
+        return new Response('<html><body>The email has been sent successfully!</body></html>');
     }
 
     /**
