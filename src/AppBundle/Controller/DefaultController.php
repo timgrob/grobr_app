@@ -24,6 +24,23 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Request $request)
+    {
+
+
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function regiserAction(Request $request)
+    {
+        
+    }
+
+    /**
      * @Route("/contact", name="contact")
      */
     public function contactAction(Request $request, EntityManagerInterface $entityManager, \Swift_Mailer $mailer)
@@ -53,8 +70,9 @@ class DefaultController extends Controller
             return new Response('<html><body>The email has been sent successfully!</body></html>');
         }
 
-        return $this->render('AppBundle::emails/contactForm.html.twig', array(
+        return $this->render('AppBundle::emails/contactEmail.html.twig', array(
             'form' => $contactForm->createView(),
+            'name' => 'tim'
         ));
     }
 
@@ -73,13 +91,5 @@ class DefaultController extends Controller
 
         $mailer->send($message);
         return new Response('<html><body>The email has been sent successfully!</body></html>');
-    }
-
-    /**
-     * @Route("/", name="test")
-     */
-    public function testAction(Request $request)
-    {
-        return new Response('<html><body>Hello World</body></html>');
     }
 }
