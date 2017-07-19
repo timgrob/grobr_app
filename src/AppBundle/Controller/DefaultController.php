@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     public function regiserAction(Request $request)
     {
-        
+
     }
 
     /**
