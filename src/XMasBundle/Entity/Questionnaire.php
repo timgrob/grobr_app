@@ -2,6 +2,8 @@
 
 namespace XMasBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,14 @@ class Questionnaire
      * @ORM\OneToMany(targetEntity="Question", mappedBy="questionnaire")
      */
     private $questions;
+
+    /**
+     * Questionnaire constructor.
+     */
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -55,7 +65,7 @@ class Questionnaire
     }
 
     /**
-     * @return Question[]
+     * @return Collection|Question[]
      */
     public function getQuestions()
     {
@@ -63,7 +73,7 @@ class Questionnaire
     }
 
     /**
-     * @param Question[] $questions
+     * @param Collection|Question[] $questions
      *
      * @return $this
      */
@@ -71,5 +81,13 @@ class Questionnaire
     {
         $this->questions = $questions;
         return $this;
+    }
+
+    /**
+     * @param Question $question
+     */
+    public function addQuestion($question)
+    {
+        $this->questions->add($question);
     }
 }

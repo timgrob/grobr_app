@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Form\ContactFormType;
+use AppBundle\Service\MessageGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,20 +25,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/about", name="about")
      */
-    public function loginAction(Request $request)
+    public function aboutAction(Request $request)
     {
-
-
+        return $this->render('AppBundle::about.html.twig');
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/project", name="project")
      */
-    public function regiserAction(Request $request)
+    public function projectAction(Request $request)
     {
-
+        return $this->render('AppBundle::project.html.twig');
     }
 
     /**

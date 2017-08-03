@@ -2,13 +2,17 @@
 
 namespace XMasBundle\Controller;
 
+use AppBundle\Service\MessageGenerator;
 use Doctrine\ORM\Mapping as ORM;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use XMasBundle\Entity\Question;
+use XMasBundle\Entity\Questionnaire;
+use XMasBundle\Form\QuestionnaireType;
 use XMasBundle\Form\QuestionType;
+use XMasBundle\Service\PictureProvider;
 
 /**
  * @ORM\Entity
@@ -21,7 +25,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return new Response('<html><body><h1>This is the christmas bundle</h1></body></html>');
+        return $this->render('XMasBundle::index.html.twig');
     }
 
     /**
@@ -29,7 +33,20 @@ class DefaultController extends Controller
      */
     public function profileAction(Request $request)
     {
-        return new Response('<html><body><h1>This is your profile</h1></body></html>');
+        return $this->render('XMasBundle::profile.html.twig');
+    }
+
+    /**
+     * @Route("/memories", name="memories")
+     */
+    public function memoriesAction()
+    {
+        $pictureProvider = $this->get('xmas.pictureProvider');
+        $pictureFileNames = $pictureProvider->fetchPictureFileNames();
+
+        return $this->render('XMasBundle::memories.html.twig', array(
+            'pictureFileNames' => $pictureFileNames
+        ));
     }
 
 
@@ -38,13 +55,27 @@ class DefaultController extends Controller
      */
     public function quizAction(Request $request)
     {
-        $question = new Question();
-        $question->setQuestion('hello world');
-        $question->setAnswer1('1');
-        $question->setAnswer2('2');
-        $question->setAnswer3('3');
+        $question1 = new Question();
+        $question1->setQuestion('hello world 1');
+        $question1->setAnswer1('answer 1');
+        $question1->setAnswer2('answer 2');
+        $question1->setAnswer3('answer 3');
 
-        $form = $this->createForm(QuestionType::class, $question);
+        $question2 = new Question();
+        $question2->setQuestion('hello world 2');
+        $question2->setAnswer1('1');
+        $question2->setAnswer2('2');
+        $question2->setAnswer3('3');
+
+        $questionnaire = new Questionnaire();
+        $questionnaire->addQuestion($question1);
+        $questionnaire->addQuestion($question2);
+
+        $form = $this->createForm(QuestionnaireType::class, $questionnaire);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return null;
+        }
 
         return $this->render('XMasBundle::quiz.html.twig', array(
             'form' => $form->createView(),

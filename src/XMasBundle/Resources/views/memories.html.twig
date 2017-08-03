@@ -1,0 +1,8 @@
+{% extends 'XMasBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>This are memories</h1>
+    {% for pictureFile in pictureFileNames %}
+        <h2>{{ pictureFile }}</h2>
+    {% endfor %}
+{% endblock %}

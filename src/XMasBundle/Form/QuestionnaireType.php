@@ -15,7 +15,9 @@ class QuestionnaireType extends AbstractType
     {
         $builder
             ->add('description', TextType::class)
-            ->add('questions', CollectionType::class)
+            ->add('questions', CollectionType::class, array(
+                'entry_type' => QuestionType::class
+            ))
         ;
     }
 
