@@ -25,19 +25,27 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/about", name="about")
-     */
-    public function aboutAction(Request $request)
-    {
-        return $this->render('AppBundle::about.html.twig');
-    }
-
-    /**
      * @Route("/project", name="project")
      */
     public function projectAction(Request $request)
     {
         return $this->render('AppBundle::project.html.twig');
+    }
+
+    /**
+     * @Route("/finance", name="finance")
+     */
+    public function financeAction(Request $request)
+    {
+        return $this->render('AppBundle::finance.html.twig');
+    }
+
+    /**
+     * @Route("/about", name="about")
+     */
+    public function aboutAction(Request $request)
+    {
+        return $this->render('AppBundle::about.html.twig');
     }
 
     /**
