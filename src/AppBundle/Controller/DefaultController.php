@@ -18,10 +18,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        return $this->render('AppBundle::index.html.twig'); 
     }
 
     /**
@@ -85,19 +82,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/send")
-     */
-    public function sendAction()
+    * @Route("/login", name="login")
+    */
+    public function loginAction(Request $request)
     {
-        $mailer = $this->get('mailer');
-        $message = \Swift_Message::newInstance()
-            ->setSubject('The Subject for this Message')
-            ->setFrom($this->container->getParameter('mailer_user'))
-            ->setTo('webpage@timgrob.ch')
-            ->setBody('Email from your server')
-        ;
-
-        $mailer->send($message);
-        return new Response('<html><body>The email has been sent successfully!</body></html>');
+        return $this->redirectToRoute('contact');
     }
+
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
+
 }
