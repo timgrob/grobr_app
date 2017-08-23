@@ -13,7 +13,7 @@ class Question
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -36,6 +36,11 @@ class Question
      * @ORM\Column(type="string")
      */
     private $answer3;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $givenAnswer;
 
     /**
      * @ORM\Column(type="integer")
@@ -129,6 +134,22 @@ class Question
     {
         $this->answer3 = $answer3;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGivenAnswer()
+    {
+        return $this->givenAnswer;
+    }
+
+    /**
+     * @param mixed $givenAnswer
+     */
+    public function setGivenAnswer($givenAnswer)
+    {
+        $this->givenAnswer = $givenAnswer;
     }
 
     /**

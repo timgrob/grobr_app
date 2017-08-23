@@ -13,6 +13,7 @@ use XMasBundle\Entity\Questionnaire;
 use XMasBundle\Form\QuestionnaireType;
 use XMasBundle\Form\QuestionType;
 use XMasBundle\Service\PictureProvider;
+use XMasBundle\Service\QuizChecker;
 
 /**
  * @ORM\Entity
@@ -73,7 +74,13 @@ class DefaultController extends Controller
 
         $form = $this->createForm(QuestionnaireType::class, $questionnaire);
 
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $quizChecker = new QuizChecker($form);
+            $points = $quizChecker->run();
+
             return null;
         }
 

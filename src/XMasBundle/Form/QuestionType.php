@@ -22,7 +22,7 @@ class QuestionType extends AbstractType
             ))
             ->add('answer2', TextType::class)
             ->add('answer3', TextType::class)
-            ->add('solution', ChoiceType::class, array(
+            ->add('givenAnswer', ChoiceType::class, array(
                 'choices' => array(
                     'Antwort 1' => 0,
                     'Antwort 2' => 1,
