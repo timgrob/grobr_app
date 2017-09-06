@@ -14,11 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="index")
      */
     public function indexAction(Request $request)
     {
-        return $this->render('AppBundle::index.html.twig'); 
+        // replace this example code with whatever you need
+        return $this->render('default/index.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        ));
+    }
+
+    /**
+     * @Route("/home", name="home")
+     */
+    public function homeAction(Request $request)
+    {
+        return $this->render('AppBundle::home.html.twig');
     }
 
     /**
